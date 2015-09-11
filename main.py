@@ -1,49 +1,55 @@
+import sys
+sys.path.insert(0, 'lib')
+import json
+
+import lib.falcon as falcon
+
+from google.appengine.ext.webapp.util import run_wsgi_app
+
 __author__ = 'lorenzo'
 
 
-import sys
-sys.path.insert(0, 'lib')
-
-import lib.falcon as falcon
-from wsgiref import simple_server
-
-
-class ThingsResource(object):
+class Entrypoint(object):
     def on_get(self, req, resp):
         """Handles GET requests"""
         resp.status = falcon.HTTP_200
-        parsed = parse_graphql()
-        resp.body = str(parsed)
+        resp.content_type = "application/json"
+        resp.body = json.dumps([{"element": "/component"}, {"collection": "/component/c"}])
 
 
-from lib.graphql.parser import GraphQLParser
+class ComponentResource(object):
+    def on_get(self, req, resp):
+        """Handles GET requests"""
+        resp.status = falcon.HTTP_200
+        resp.content_type = "application/json"
+        resp.body = json.dumps({"id": "123"})
 
 
-def parse_graphql():
-    parser = GraphQLParser()
-    ast = parser.parse("""
-    {
-      user(id: 4) {
-        id
-        name
-        profilePic
-        avatar: profilePic(width: 30, height: 30)
-      }
-    }
-    """)
-    print(ast)
-    return ast
+class ComponentCollection(object):
+    def on_get(self, req, resp):
+        """Handles GET requests"""
+        resp.status = falcon.HTTP_200
+        resp.content_type = "application/json"
+        resp.body = json.dumps([{"id": "123"}, {"id": "124"}, {"id": "125"}])
 
 
 # Resources are represented by long-lived class instances
-things = ThingsResource()
+component = ComponentResource()
+collection = ComponentCollection()
+entrypoint = Entrypoint()
 
 # falcon.API instances are callable WSGI apps
 api = falcon.API()
 
 # things will handle all requests to the '/things' URL path
-api.add_route('/things', things)
+api.add_route('/component/c', collection)
+api.add_route('/component', component)
+api.add_route('/', entrypoint)
+
+
+def main():
+    run_wsgi_app(api)
 
 if __name__ == '__main__':
-    httpd = simple_server.make_server('127.0.0.1', 5000, api)
-    httpd.serve_forever()
+    main()
+
