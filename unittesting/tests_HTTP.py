@@ -57,4 +57,4 @@ def runTest(srv='local'):
 
 
 if __name__ == '__main__':
-    runTest('remote')
+    runTest('local')

@@ -14,15 +14,25 @@ class Entrypoint(object):
         """Handles GET requests"""
         resp.status = falcon.HTTP_200
         resp.content_type = "application/json"
-        resp.body = json.dumps([{"element": "/component"}, {"collection": "/component/c"}])
+        resp.body = json.dumps([{"element": "/component/123"}, {"collection": "/component/c"}])
 
 
 class ComponentResource(object):
-    def on_get(self, req, resp):
+    def on_get(self, req, resp, **params):
         """Handles GET requests"""
-        resp.status = falcon.HTTP_200
+
         resp.content_type = "application/json"
-        resp.body = json.dumps({"id": "123"})
+
+        from unittesting.mock_endpoints import components
+
+        component = [c for c in components if c['uuid'] == params['uuid']]
+
+        if component:
+            resp.status = falcon.HTTP_200
+            resp.body = json.dumps(component[0], indent=2)
+            return
+
+        resp.status = falcon.HTTP_404
 
 
 class ComponentCollection(object):
@@ -30,7 +40,8 @@ class ComponentCollection(object):
         """Handles GET requests"""
         resp.status = falcon.HTTP_200
         resp.content_type = "application/json"
-        resp.body = json.dumps([{"id": "123"}, {"id": "124"}, {"id": "125"}])
+        from unittesting.mock_endpoints import components
+        resp.body = json.dumps(components, indent=2)
 
 
 # Resources are represented by long-lived class instances
@@ -43,7 +54,7 @@ api = falcon.API()
 
 # things will handle all requests to the '/things' URL path
 api.add_route('/component/c', collection)
-api.add_route('/component', component)
+api.add_route('/component/{uuid}', component)
 api.add_route('/', entrypoint)
 
 

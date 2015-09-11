@@ -3,6 +3,8 @@ six
 parsimonious>=0.6.2
 ply==3.6
 mimeparse
+
+# for testing
 pycurl
 
 # graphqlpy
