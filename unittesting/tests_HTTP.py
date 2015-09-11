@@ -1,6 +1,5 @@
 import unittest
 import json
-import urllib
 
 __author__ = 'Lorenzo'
 
@@ -39,12 +38,8 @@ def test_integrity(res):
         assert False
 
 
-def test_endpoints(env):
-    envs = {
-        'local': 'http://localhost:8080/',
-        'remote': 'http://mild-ql.appspot.com/'
-    }
-    base_url = envs[env]
+def test_endpoints(srv):
+    base_url = srv
     tests = ['', 'component', 'component/c']
     responses = [get_curling(base_url + t) for t in tests]
 
@@ -53,6 +48,13 @@ def test_endpoints(env):
         test_integrity(r)
 
 
+def runTest(srv='local'):
+    _ENV = {
+        'local': 'http://localhost:8080/',
+        'remote': 'http://mild-ql.appspot.com/'
+    }
+    test_endpoints(_ENV[srv])
+
+
 if __name__ == '__main__':
-    env = 'local'
-    test_endpoints(env)
+    runTest('remote')
