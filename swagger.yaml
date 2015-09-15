@@ -64,42 +64,46 @@ paths:
     get:
       summary: A Spaceship Subsystem (a family of components)
       description: |
-
+        The Subsystem endpoint returns a JSON object with the
+        description of the family of components. Different components
+        belong to different subsystem types. The totality of the
+        subsystems (eight families in total) is the spacecraft.
       parameters:
-        - name: id
+        - name: slug
           in: query
-          description: id of the component
+          description: slug of the subsystem
           required: true
-          type: number
-          format: integer
+          type: string
       tags:
-        - Component
+        - Subsystem
       responses:
         '200':
-          description: A single component
+          description: A single subsystem
           schema:
             type: object
             items:
-              $ref: '#/definitions/Component'
+              $ref: '#/definitions/Subsystem'
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
   /subsysytem/c:
     get:
-      summary: Subsystems Collectio
+      summary: Subsystem Collection
       description: >
-
-
+        The SubsystemCollection endpoint returns an array of objects
+        representing all the eight different groups/families in which
+        a component can belong to. All these different types of
+        subsystem together are the spacecraft.
       tags:
-        - ComponentCollection
+        - SubsystemCollection
       responses:
         '200':
           description: An array of component objects
           schema:
             type: array
             items:
-              $ref: '#/definitions/ComponentCollection'
+              $ref: '#/definitions/SubsystemCollection'
         default:
           description: Unexpected error
           schema:
