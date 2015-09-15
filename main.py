@@ -17,9 +17,9 @@ class Entrypoint(object):
         resp.content_type = "application/json"
         resp.body = json.dumps([
             {"example": _SERVICE + "/component/123"},
-            {"collection": _SERVICE + "/component/c"},
-            {"subsystem": _SERVICE + "/subsystem/c"}
-        ])
+            {"component_collection": _SERVICE + "/component/c"},
+            {"subsystem_collection": _SERVICE + "/subsystem/c"}
+        ], indent=2)
 
 
 class ComponentResource(object):
