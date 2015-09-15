@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from falcon import HTTP_200
-from libs.falcon.testing.helpers import rand_string
+from .helpers import rand_string
 
 
 class TestResource:

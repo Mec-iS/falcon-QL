@@ -1,32 +1,32 @@
 import sys
 sys.path.insert(0, 'lib')
+
 import json
-
-import lib.falcon as falcon
-
+import falcon as falcon
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 __author__ = 'lorenzo'
 
+from config import _SERVICE, _DEBUG
 
 class Entrypoint(object):
     def on_get(self, req, resp):
         """Handles GET requests"""
         resp.status = falcon.HTTP_200
         resp.content_type = "application/json"
-        resp.body = json.dumps([{"element": "/component/123"}, {"collection": "/component/c"}])
+        resp.body = json.dumps([{"example": "/component/123"}, {"collection": "/component/c"}])
 
 
 class ComponentResource(object):
     def on_get(self, req, resp, **params):
         """Handles GET requests"""
-
         resp.content_type = "application/json"
 
         from unittesting.mock_endpoints import components
 
-        component = [c for c in components if c['uuid'] == params['uuid']]
-
+        component = [c
+                     for c in components
+                     if c['uuid'] == params['uuid']]
         if component:
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(component[0], indent=2)
@@ -41,6 +41,12 @@ class ComponentCollection(object):
         resp.status = falcon.HTTP_200
         resp.content_type = "application/json"
         from unittesting.mock_endpoints import components
+
+        components = [{'name': c['name'],
+                       'uuid': c['uuid'],
+                       'type_(not implemented)': _SERVICE + "/subsystem/" + c['type'][c['type'].rfind('/') + 1:]}
+             for c in components]
+
         resp.body = json.dumps(components, indent=2)
 
 

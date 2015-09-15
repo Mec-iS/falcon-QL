@@ -1,0 +1,106 @@
+swagger: '2.0'
+info:
+  title: mild-ql Test
+  description: graphQL in Python
+  version: 1.0.0
+host: mild-ql.appspot.com
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+paths:
+  /component:
+    get:
+      summary: A Spaceship Component
+      description: |
+        The Component endpoint returns a JSON object with the
+        physical charcteristics of a part. Every property in the
+        object has a 'value' that is a measure of the characteristic
+        of the component, and a 'type' that is a link to the unit of
+        measure of the characteristics.
+      parameters:
+        - name: uuid
+          in: query
+          description: id of the component
+          required: true
+          type: number
+          format: integer
+      tags:
+        - Component
+      responses:
+        '200':
+          description: A single component
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Component'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /component/c:
+    get:
+      summary: Components Collection
+      description: |
+        The ComponentCollection endpoint returns the list of all the components.
+        Every object has a 'uuid' property to be used with the Component endpoint
+        to fetch the full object. The 'type' property assign every object to a group
+        of subsystems (see Subsystem endpoint).
+      tags:
+        - ComponentCollection
+      responses:
+        '200':
+          description: An array of component objects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ComponentCollection'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /subsystem:
+    get:
+      summary: A Spaceship Subsystem (a family of components)
+      description: |
+
+      parameters:
+        - name: id
+          in: query
+          description: id of the component
+          required: true
+          type: number
+          format: integer
+      tags:
+        - Component
+      responses:
+        '200':
+          description: A single component
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Component'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /subsysytem/c:
+    get:
+      summary: Subsystems Collectio
+      description: >
+
+
+      tags:
+        - ComponentCollection
+      responses:
+        '200':
+          description: An array of component objects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ComponentCollection'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'

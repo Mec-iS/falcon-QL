@@ -5,6 +5,9 @@ ply==3.6
 mimeparse
 
 # for testing
-pycurl
+#pycurl
 
 # graphqlpy
+
+# run from the project root:
+# pip install -t lib -r requirements.txt
