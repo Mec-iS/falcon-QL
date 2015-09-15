@@ -1,0 +1,141 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "mild-ql Test",
+        "description": "graphQL in Python",
+        "version": "1.0.0"
+    },
+    "host": "mild-ql.appspot.com",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/component": {
+            "get": {
+                "summary": "A Spaceship Component",
+                "description": "The Component endpoint returns a JSON object with the\nphysical charcteristics of a part. Every property in the\nobject has a 'value' that is a measure of the characteristic\nof the component, and a 'type' that is a link to the unit of\nmeasure of the characteristics.\n",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "id of the component",
+                        "required": true,
+                        "type": "number",
+                        "format": "integer"
+                    }
+                ],
+                "tags": [
+                    "Component"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single component",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/Component"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/component/c": {
+            "get": {
+                "summary": "Components Collection",
+                "description": "The ComponentCollection endpoint returns the list of all the components.\nEvery object has a 'uuid' property to be used with the Component endpoint\nto fetch the full object. The 'type' property assign every object to a group\nof subsystems (see Subsystem endpoint).\n",
+                "tags": [
+                    "ComponentCollection"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of component objects",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ComponentCollection"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/subsystem": {
+            "get": {
+                "summary": "A Spaceship Subsystem (a family of components)",
+                "description": "The Subsystem endpoint returns a JSON object with the\ndescription of the family of components. Different components\nbelong to different subsystem types. The totality of the\nsubsystems (eight families in total) is the spacecraft.\n",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "query",
+                        "description": "slug of the subsystem",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Subsystem"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single subsystem",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/Subsystem"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/subsysytem/c": {
+            "get": {
+                "summary": "Subsystem Collection",
+                "description": "The SubsystemCollection endpoint returns an array of objects representing all the eight different groups/families in which a component can belong to. All these different types of subsystem together are the spacecraft.\n",
+                "tags": [
+                    "SubsystemCollection"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of component objects",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SubsystemCollection"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

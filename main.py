@@ -63,8 +63,8 @@ class SubsystemResource(object):
         from unittesting.mock_endpoints import subsystems
 
         results = [s
-                     for s in subsystems
-                     if s['name'][s['name'].rfind('/') + 1:] == params['slug']]
+                   for s in subsystems
+                   if s['name'][s['name'].rfind('/') + 1:] == params['slug']]
         if component:
             resp.status = falcon.HTTP_200
             resp.body = json.dumps(results[0], indent=2)
