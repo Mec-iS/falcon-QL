@@ -21,7 +21,7 @@ paths:
         measure of the characteristics.
       parameters:
         - name: uuid
-          in: query
+          in: path
           description: id of the component
           required: true
           type: number
@@ -70,7 +70,7 @@ paths:
         subsystems (eight families in total) is the spacecraft.
       parameters:
         - name: slug
-          in: query
+          in: path
           description: slug of the subsystem
           required: true
           type: string

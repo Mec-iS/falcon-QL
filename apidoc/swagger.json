@@ -17,11 +17,11 @@
         "/component": {
             "get": {
                 "summary": "A Spaceship Component",
-                "description": "The Component endpoint returns a JSON object with the\nphysical charcteristics of a part. Every property in the\nobject has a 'value' that is a measure of the characteristic\nof the component, and a 'type' that is a link to the unit of\nmeasure of the characteristics.\n",
+                "description": "The Component endpoint returns a JSON object with the\nphysical characteristics of a part. Every property in the\nobject has a 'value' that is a measure of the characteristic\nof the component, and a 'type' that is a link to the unit of\nmeasure of the characteristics.\n",
                 "parameters": [
                     {
                         "name": "uuid",
-                        "in": "query",
+                        "in": "path",
                         "description": "id of the component",
                         "required": true,
                         "type": "number",
@@ -83,7 +83,7 @@
                 "parameters": [
                     {
                         "name": "slug",
-                        "in": "query",
+                        "in": "path",
                         "description": "slug of the subsystem",
                         "required": true,
                         "type": "string"
