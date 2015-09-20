@@ -15,7 +15,7 @@ paths:
       summary: A Spaceship Component
       description: |
         The Component endpoint returns a JSON object with the
-        physical charcteristics of a part. Every property in the
+        physical characteristics of a part. Every property in the
         object has a 'value' that is a measure of the characteristic
         of the component, and a 'type' that is a link to the unit of
         measure of the characteristics.
